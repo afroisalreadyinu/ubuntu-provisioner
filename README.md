@@ -40,7 +40,22 @@ The script does the following right now (edit the `main` function to customize):
 
 ## Usage
 
-Add a file `config.json` with the following keys:
+Add a file `config.json` into the same directory as the `provision.py` script
+(format of `config.json` documented below). Afterwards, run `python3.6
+provision.py pack`. This will produce a file (encrypted, if you have openssl
+installed) that contains the following, zipped:
+
+- `provision.py`
+
+- The SSH key files (private and accompanying public files) from the `~/.ssh`
+  directory.
+
+- `config.json`
+
+When you want to provision a new computer, copy this seed to that computer,
+decrypt and unpack it. Then run `python3.6 provision.py run`.
+
+## config.json contents
 
 - `packages`: The packages to be installed. Subkeys:
 

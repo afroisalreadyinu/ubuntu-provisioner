@@ -213,6 +213,7 @@ def pack():
             shutil.copy(str(private_key), str(ssh_local / private_key.name))
     with ZipFile("provisioner.zip", 'w') as out_zip:
         out_zip.write("provisioner/provision.py")
+        out_zip.write("provisioner/config.json")
         out_zip.write("provisioner/ssh_files")
         for file_name in file_names:
             out_zip.write(f"provisioner/ssh_files/{file_name}")
