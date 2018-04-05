@@ -199,6 +199,7 @@ def pack():
     provisioner_dir = CURRENT_DIR / "provisioner"
     provisioner_dir.mkdir(exist_ok=True)
     shutil.copy(__file__, str(provisioner_dir))
+    shutil.copy(str(CURRENT_DIR / "config.json"), str(provisioner_dir))
     ssh_local = provisioner_dir / "ssh_files"
     ssh_local.mkdir(exist_ok=True)
     ssh_home = HOME / ".ssh"
@@ -211,13 +212,25 @@ def pack():
             shutil.copy(str(public_key), str(ssh_local / public_key.name))
             file_names.append(private_key.name)
             shutil.copy(str(private_key), str(ssh_local / private_key.name))
-    with ZipFile("provisioner.zip", 'w') as out_zip:
+    zip_file_path = str(CURRENT_DIR / "provisioner.zip")
+    with ZipFile(zip_file_path, 'w') as out_zip:
         out_zip.write("provisioner/provision.py")
         out_zip.write("provisioner/config.json")
         out_zip.write("provisioner/ssh_files")
         for file_name in file_names:
             out_zip.write(f"provisioner/ssh_files/{file_name}")
     shutil.rmtree(str(provisioner_dir))
+    if run_cmd(["which", "gpg"]) == 0: # gpg exists
+        return_val = run_cmd("openssl aes-256-cbc -salt -in provisioner.zip -out provisioner.zip.enc".split())
+        if return_val == 0:
+            os.remove(zip_file_path)
+            print("Encrypted seed saved as provisioner.zip.enc")
+            print("Decode with: openssl aes-256-cbc -d -in provisioner.zip.enc -out provisioner.zip")
+        else:
+            print("Encryption failed (password mismatch?)")
+            print("Seed saved as provisioner.zip. Delete and pack again for encryption.")
+    else:
+        print("Seed saved as provisioner.zip")
 
 def read_config():
     with open(CURRENT_DIR / 'config.json', 'r') as json_file:
