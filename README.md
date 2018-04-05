@@ -54,8 +54,21 @@ Add a file `config.json` with the following keys:
 
     + `no-x`: Packages to be installed if it's a server system.
 
-- `apt-repos`: The apt repositories to add.
+- `apt-repos`: The apt repositories to add. A list of dictionaries. Each
+  dictionary should have the key `repo_spec`, a repo specification in the format
+  `apt-add-repository` accepts, and either `key_url` for the gpg key, or
+  `keyserver` and `recv_keys`.
 
 - `git-repos`: The repos to be checked out. This should be a list, with each
   element another list of length two, the first item being the Git URL, and the
   second the location to checkt out to.
+
+- `binaries`: Binary files to install as executables to `/usr/local/bin`. List
+  of lists of length two. First item is the URL of the file, second is how it
+  should be named locally.
+
+- `executable-from-repo`: List of repository URLs that should be installed. The
+  repository is cloned to `/tmp`, then compiled and installed with `autoconf`,
+  `configure` and `sudo make install`.
+
+- `kubeconfig`: Kubernetes configurations to download.
