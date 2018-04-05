@@ -189,6 +189,7 @@ def main(config, x_or_no):
 
     for repo_url in config['executable-from-repo']:
         install_executable_from_repo(repo_url)
+
     for main_url, config_name in config['kubeconfig']:
         copy_kubeconfig(main_url, config_name)
 
