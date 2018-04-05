@@ -1,0 +1,28 @@
+{
+  "packages": {
+    "preliminary": ["apt-transport-https", "ca-certificates", "software-properties-common"],
+    "base": ["python3.6-dev", "build-essential", "git", "unp", "virtualenv",
+	     "virtualenvwrapper", "screen"],
+    "x": ["chromium-browser,", "emacs25", "gnome-tweak-tool"],
+    "no-x": ["network-manager", "emacs25-nox", "acpi"]
+  },
+  "repos": [
+    {"repo_spec": "deb [arch=amd64] https://download.docker.com/linux/ubuntu {RELEASE_CODENAME} stable",
+     "key_url": "https://download.docker.com/linux/ubuntu/gpg"},
+    {"repo_spec": "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {RELEASE_CODENAME} main",
+     "keyserver": "packages.microsoft.com",
+     "recv_keys": "52E16F86FEE04B979B07E28DB02C46DF417A0893"},
+  ],
+  "git-repos": [
+    ["git@github.com:afroisalreadyinu/abl-mode.git", "projects/abl-mode"],
+    ["git@github.com:afroisalreadyinu/emacsd.git", ".emacs.d"]
+  ],
+  "binaries": [
+    ["https://storage.googleapis.com/kubernetes-release/release/v1.9.2/bin/linux/amd64/kubectl",
+     "kubectl"]
+  ],
+  "executable-from-repo": ["git@github.com:powerman/vcprompt.git"],
+  "kubeconfig": [
+    ["some-kubernetes-server.westeurope.cloudapp.azure.com", "demo"]
+  ]
+}
