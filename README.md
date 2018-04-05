@@ -48,20 +48,21 @@ Add a file `config.json` with the following keys:
       else. Things that are required for adding keys etc (like
       `apt-transport-https`) should be under this key.
 
-    + `x`: Packages to be installed if the system has a running X system, i.e.
-      if it's a desktop OS. This distinction is made based on the availability
-      of the environment variable `XDG_CURRENT_DESKTOP`.
+    + `x`: Packages to be installed if the current shell is running in a
+      windowing system, i.e. if it's a desktop OS. This distinction is made
+      based on the availability of the environment variable
+      `XDG_CURRENT_DESKTOP`.
 
-    + `no-x`: Packages to be installed if it's a server system.
+    + `no-x`: Packages to be installed if the current shell is not running in a
+      windowing system.
 
 - `apt-repos`: The apt repositories to add. A list of dictionaries. Each
   dictionary should have the key `repo_spec`, a repo specification in the format
   `apt-add-repository` accepts, and either `key_url` for the gpg key, or
-  `keyserver` and `recv_keys`.
+  `keyserver` and `recv_keys` to download the key.
 
-- `git-repos`: The repos to be checked out. This should be a list, with each
-  element another list of length two, the first item being the Git URL, and the
-  second the location to checkt out to.
+- `git-repos`: The repos to be checked out. List of lists of length two, the
+  first item being the Git URL, and the second the location to check out to.
 
 - `binaries`: Binary files to install as executables to `/usr/local/bin`. List
   of lists of length two. First item is the URL of the file, second is how it
@@ -69,6 +70,9 @@ Add a file `config.json` with the following keys:
 
 - `executable-from-repo`: List of repository URLs that should be installed. The
   repository is cloned to `/tmp`, then compiled and installed with `autoconf`,
-  `configure` and `sudo make install`.
+  `configure` and `sudo make install`. The local clone is then deleted.
 
-- `kubeconfig`: Kubernetes configurations to download.
+- `kubeconfig`: Kubernetes configurations to download. List of lists of length
+  two. The first item is the Kubernetes primary server to download the
+  configuration from, the second is under which name it should be saved in
+  `~/.kube`.

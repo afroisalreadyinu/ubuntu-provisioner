@@ -118,6 +118,7 @@ def install_executable_from_repo(repo_url):
     run_cmd(["autoconf"], cwd=str(repo_path))
     run_cmd(["./configure"], cwd=str(repo_path))
     run_cmd(["sudo", "make", "install"], cwd=str(repo_path))
+    shutil.rmtree(str(repo_path))
 
 
 def check_out_repos(repos):
