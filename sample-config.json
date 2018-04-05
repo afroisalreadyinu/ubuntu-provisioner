@@ -6,7 +6,7 @@
     "x": ["chromium-browser,", "emacs25", "gnome-tweak-tool"],
     "no-x": ["network-manager", "emacs25-nox", "acpi"]
   },
-  "repos": [
+  "apt-repos": [
     {"repo_spec": "deb [arch=amd64] https://download.docker.com/linux/ubuntu {RELEASE_CODENAME} stable",
      "key_url": "https://download.docker.com/linux/ubuntu/gpg"},
     {"repo_spec": "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {RELEASE_CODENAME} main",

@@ -42,8 +42,20 @@ The script does the following right now (edit the `main` function to customize):
 
 Add a file `config.json` with the following keys:
 
-- packages: The packages to be installed. Subkeys:
+- `packages`: The packages to be installed. Subkeys:
 
-    + preliminary: These are installed after the update but before everything
+    + `preliminary`: These are installed after the update but before everything
       else. Things that are required for adding keys etc (like
       `apt-transport-https`) should be under this key.
+
+    + `x`: Packages to be installed if the system has a running X system, i.e.
+      if it's a desktop OS. This distinction is made based on the availability
+      of the environment variable `XDG_CURRENT_DESKTOP`.
+
+    + `no-x`: Packages to be installed if it's a server system.
+
+- `apt-repos`: The apt repositories to add.
+
+- `git-repos`: The repos to be checked out. This should be a list, with each
+  element another list of length two, the first item being the Git URL, and the
+  second the location to checkt out to.

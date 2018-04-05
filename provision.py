@@ -179,7 +179,7 @@ def main(config, x_or_no):
     if not install_packages(config['packages']['preliminary']):
         return
 
-    for entry in config['repos']:
+    for entry in config['apt-repos']:
        add_repo(**entry)
 
     check_out_repos(config['git-repos'])
@@ -222,7 +222,7 @@ def read_config():
         config = json.loads(json_file.read())
     return config
 
-USAGE = "Usage: python3 provision.py pack | run --no-x/--x"
+USAGE = "Usage: python3 provision.py pack | run"
 
 def _main():
     if len(sys.argv) < 2:
@@ -235,11 +235,7 @@ def _main():
     if command == 'pack':
         pack()
     else:
-        if sys.argv[2] not in ["--x", "--no-x"]:
-            print(USAGE)
-            return
-        config = read_config()
-        x_or_no = sys.argv[1] == "--x"
+        x_or_no = 'XDG_CURRENT_DESKTOP' in os.environ
         main(config, x_or_no)
 
 
