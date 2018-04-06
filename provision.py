@@ -175,13 +175,20 @@ def main(config, x_or_no):
     if os.path.exists("/var/run/reboot-required"):
         print(colorit("red", "You need to reboot"))
         return
-    install_ssh_keys()
 
     if not install_packages(config['packages']['preliminary']):
         return
 
+    install_ssh_keys()
+
     for entry in config['apt-repos']:
        add_repo(**entry)
+
+    extra_packages = config['packages']['x'] if x_or_no else config['packages']['no-x']
+    all_packages = config['packages']['base'] + extra_packages
+
+    if not install_packages(all_packages):
+        return
 
     check_out_repos(config['git-repos'])
 

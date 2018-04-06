@@ -27,6 +27,8 @@ The script does the following right now (edit the `main` function to customize):
 
 - Copy ssh keys, add them to agent
 
+- Add apt package sources
+
 - Install all other packages
 
 - Check out repos
