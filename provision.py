@@ -202,7 +202,7 @@ def main(config, x_or_no):
         copy_kubeconfig(main_url, config_name)
 
 
-def pack():
+def pack(config):
     provisioner_dir = CURRENT_DIR / "provisioner"
     provisioner_dir.mkdir(exist_ok=True)
     shutil.copy(__file__, str(provisioner_dir))
@@ -238,6 +238,9 @@ def pack():
             print("Seed saved as provisioner.zip. Delete and pack again for encryption.")
     else:
         print("Seed saved as provisioner.zip")
+    if 'copy-to' in config:
+        run_cmd(['scp', 'provisioner.zip.enc', config['copy-to']])
+
 
 def read_config():
     with open(CURRENT_DIR / 'config.json', 'r') as json_file:
@@ -254,8 +257,9 @@ def _main():
     if command not in ['pack', 'run']:
         print(USAGE)
         return
+    config = read_config()
     if command == 'pack':
-        pack()
+        pack(config)
     else:
         x_or_no = 'XDG_CURRENT_DESKTOP' in os.environ
         main(config, x_or_no)

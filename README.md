@@ -93,3 +93,6 @@ decrypt and unpack it. Then run `python3.6 provision.py run`.
   two. The first item is the Kubernetes primary server to download the
   configuration from, the second is under which name it should be saved in
   `~/.kube`.
+
+- `copy-to`: This option is used by the `pack` command to `scp` the seed
+  created.
