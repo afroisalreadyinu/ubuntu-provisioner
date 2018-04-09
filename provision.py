@@ -135,7 +135,7 @@ def install_ssh_keys():
     ssh_keys_dir = HOME / ".ssh"
     if not ssh_keys_dir.is_dir():
         ssh_keys_dir.mkdir()
-    ssh_files_dir = CURRENT_DIR / "ssh_keys"
+    ssh_files_dir = CURRENT_DIR / "ssh_files"
     for ssh_file in ssh_files_dir.iterdir():
         path = ssh_keys_dir / ssh_file.name
         if not path.exists():
